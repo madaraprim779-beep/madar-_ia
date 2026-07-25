@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>♤☯ MADARA IA ☯♧</title>
 
   <link rel="stylesheet" href="style.css">
@@ -12,12 +13,15 @@
 
   <h1>♤☯ MADARA IA ☯♧</h1>
 
-  <div id="chat"></div>
+  <div id="chat">
+    <div class="msg ia">
+      Bonjour, je suis MADARA IA. Pose-moi une question.
+    </div>
+  </div>
 
   <div class="box">
     <input 
       id="message" 
-      type="text" 
       placeholder="Écris ton message..."
     >
 
@@ -28,20 +32,19 @@
 
 
 <script>
-
 async function sendMessage() {
 
   const input = document.getElementById("message");
   const chat = document.getElementById("chat");
 
-  const message = input.value;
+  const text = input.value.trim();
 
-  if (!message) return;
+  if (!text) return;
 
 
   chat.innerHTML += `
     <div class="msg user">
-      ${message}
+      ${text}
     </div>
   `;
 
@@ -56,7 +59,7 @@ async function sendMessage() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        message: message
+        message: text
       })
     });
 
@@ -66,7 +69,7 @@ async function sendMessage() {
 
     chat.innerHTML += `
       <div class="msg ia">
-        ${data.reply || data.error}
+        ${data.reply || "Erreur de réponse"}
       </div>
     `;
 
@@ -83,9 +86,7 @@ async function sendMessage() {
 
 
   chat.scrollTop = chat.scrollHeight;
-
 }
-
 </script>
 
 </body>
